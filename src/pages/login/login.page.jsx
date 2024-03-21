@@ -1,12 +1,36 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/container/Container";
+import { axios } from "../../lib/axios";
+import { useNavigate } from "react-router-dom";
+import storage from "../../utils/storage";
 
 const LoginPage = () => {
+  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = {
+      email: formValues.email,
+      password: formValues.password,
+    };
+    const response = await axios.post(`/api/login`, data);
+    if (response.status === 200) {
+      console.log("Success", response.token);
+      storage.setToken(response.token);
+      navigate("/contacts");
+    }
+  };
+
   return (
     <div className="bg-discount-gradient w-full overflow-hidden h-screen">
       <Container>
         <div className="flex justify-center items-center">
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
@@ -20,7 +44,7 @@ const LoginPage = () => {
               </div>
 
               <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <div className="space-y-6" action="#" method="POST">
                   <div>
                     <label
                       htmlFor="email"
@@ -34,6 +58,7 @@ const LoginPage = () => {
                         type="email"
                         autoComplete="email"
                         required
+                        onChange={handleChange}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -54,6 +79,7 @@ const LoginPage = () => {
                         type="password"
                         autoComplete="current-password"
                         required
+                        onChange={handleChange}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -66,7 +92,7 @@ const LoginPage = () => {
                       Sign in
                     </button>
                   </div>
-                </form>
+                </div>
                 <div className="text-sm mt-6 float-start">
                   <Link
                     to="/signup"
