@@ -4,14 +4,16 @@ import { FaPhoneAlt } from "react-icons/fa";
 import Header from "../../components/header/Header";
 import { axios } from "../../lib/axios";
 import { Link } from "react-router-dom";
+import useImage from "../../hooks/useImage";
 
 export default function ContactComponent() {
   const [data, setData] = useState([]);
-  console.log("data", data);
+  const [getAvatar] = useImage();
   const getDatas = async () => {
     const response = await axios.get("/api/employees");
     setData(response);
   };
+
   useEffect(() => {
     getDatas();
   }, []);
@@ -35,12 +37,11 @@ export default function ContactComponent() {
             <li
               key={person?.id}
               className="flex justify-between gap-x-6 py-5 md:bg-zinc-800 md:m-9 md:mt-0 md:flex-col md:justify-items-center md:shadow-md md:rounded-md hover:bg-gray-700 hover:rounded px-2 hover:scale-105 ease-out	duration-300 ">
-              {console.log(person.firstName)}
               <Link to="/contacts/1">
                 <div className="flex min-w-0 gap-x-4 md:flex-col">
                   <img
                     className="h-12 w-12 flex-none rounded-full bg-gray-50 md:h-full md:w-full md:rounded-md object-cover"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={getAvatar(person.gender)}
                     alt=""
                   />
                   <div className="min-w-0 flex-auto text-center">
