@@ -1,12 +1,56 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
+import { axios } from "../../lib/axios";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    gender: "",
+    desination: "",
+    department: "",
+    email: "",
+    contact: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const data = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      address: formValues.address,
+      contact_number: formValues.contact,
+      email: formValues.email,
+      designation: formValues.desination,
+      department: formValues.department,
+      gender: formValues.gender,
+      password: formValues.password,
+    };
+    const response = await axios.post(`/api/register`, data);
+    console.log(response);
+    if (response.status === 200) {
+      navigate("/");
+    }
+  };
+  console.log("formValues", formValues);
   return (
     <div className="bg-discount-gradient w-full">
       <Container>
         <div className="flex justify-center items-center">
-          <form>
+          <form onSubmit={handleRegister}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 pt-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
@@ -28,9 +72,10 @@ const SignupPage = () => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="first-name"
+                      name="firstName"
                       id="first-name"
                       autoComplete="given-name"
+                      onChange={handleChange}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -45,8 +90,9 @@ const SignupPage = () => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="last-name"
+                      name="lastName"
                       id="last-name"
+                      onChange={handleChange}
                       autoComplete="family-name"
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                     />
@@ -63,9 +109,10 @@ const SignupPage = () => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="first-name"
+                      name="address"
                       id="first-name"
                       autoComplete="given-name"
+                      onChange={handleChange}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -78,12 +125,13 @@ const SignupPage = () => {
                   </label>
                   <div className="mt-2">
                     <select
-                      id="country"
-                      name="country"
-                      autoComplete="country-name"
+                      id="gender"
+                      name="gender"
+                      autoComplete="gender"
+                      onChange={handleChange}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <option>Male</option>
-                      <option>Female</option>
+                      <option>M</option>
+                      <option>F</option>
                     </select>
                   </div>
                 </div>
@@ -97,9 +145,10 @@ const SignupPage = () => {
                   </label>
                   <div className="mt-2">
                     <select
-                      id="country"
-                      name="country"
-                      autoComplete="country-name"
+                      id="desination"
+                      name="desination"
+                      autoComplete="desination"
+                      onChange={handleChange}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                       <option>CEO</option>
                       <option>Officer</option>
@@ -117,18 +166,22 @@ const SignupPage = () => {
                     Department
                   </label>
                   <div className="mt-2">
-                    <input
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
-                    />
+                    <select
+                      id="department"
+                      name="department"
+                      autoComplete="department"
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                      <option>IT</option>
+                      <option>Teller</option>
+                      <option>Coporate</option>
+                      <option>CSD</option>
+                    </select>
                   </div>
                 </div>
               </div>
               <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <div className="space-y-6">
                   <div>
                     <label
                       htmlFor="email"
@@ -141,6 +194,7 @@ const SignupPage = () => {
                         name="email"
                         type="email"
                         autoComplete="email"
+                        onChange={handleChange}
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
@@ -154,10 +208,11 @@ const SignupPage = () => {
                     </label>
                     <div className="mt-2">
                       <input
-                        id="phone"
-                        name="phone"
+                        id="contact"
+                        name="contact"
                         type="text"
-                        autoComplete="phone"
+                        autoComplete="contact"
+                        onChange={handleChange}
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
@@ -177,6 +232,7 @@ const SignupPage = () => {
                         id="password"
                         name="password"
                         type="password"
+                        onChange={handleChange}
                         autoComplete="current-password"
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
@@ -193,10 +249,11 @@ const SignupPage = () => {
                     </div>
                     <div className="mt-2">
                       <input
-                        id="password"
-                        name="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
                         type="password"
                         autoComplete="current-password"
+                        onChange={handleChange}
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
@@ -210,7 +267,7 @@ const SignupPage = () => {
                       Sign Up
                     </button>
                   </div>
-                </form>
+                </div>
                 <div className="text-sm mt-6 float-end pb-14">
                   <Link
                     to="/"
