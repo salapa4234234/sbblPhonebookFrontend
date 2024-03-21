@@ -28,6 +28,11 @@ const SignupPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (formValues.password !== formValues.confirmPassword) {
+      alert("Password did not match");
+      return;
+    }
     const data = {
       firstName: formValues.firstName,
       lastName: formValues.lastName,
