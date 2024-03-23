@@ -1,8 +1,9 @@
+import man from "../icons/man.png";
+import women from "../icons/woman.png";
+
 const avatar = {
-  "m,M":
-    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  "f,F":
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  "m,M": man,
+  "f,F": women,
 };
 
 const useImage = () => {

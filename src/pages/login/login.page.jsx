@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import storage from "../../utils/storage";
 
 const LoginPage = () => {
+  const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -23,9 +24,11 @@ const LoginPage = () => {
       console.log("Success", response.token);
       storage.setToken(response.token);
       navigate("/contacts");
+    } else {
+      setError(response.message);
     }
   };
-
+  console.log("error", error);
   return (
     <div className="bg-discount-gradient w-full overflow-hidden h-screen">
       <Container>
@@ -59,6 +62,8 @@ const LoginPage = () => {
                         autoComplete="email"
                         required
                         onChange={handleChange}
+                        onFocus={() => setError("")}
+                        onBlur={() => setError("")}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -80,11 +85,18 @@ const LoginPage = () => {
                         autoComplete="current-password"
                         required
                         onChange={handleChange}
+                        onFocus={() => setError("")}
+                        onBlur={() => setError("")}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
-
+                  <div
+                    className={`text-red-500 text-center text-sm ${
+                      error.length > 0 ? "block" : "hidden"
+                    }`}>
+                    {error}
+                  </div>
                   <div>
                     <button
                       type="submit"

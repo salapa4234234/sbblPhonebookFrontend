@@ -37,18 +37,18 @@ export default function ContactComponent() {
             <li
               key={person?.id}
               className="flex justify-between gap-x-6 py-5 md:bg-zinc-800 md:m-9 md:mt-0 md:flex-col md:justify-items-center md:shadow-md md:rounded-md hover:bg-gray-700 hover:rounded px-2 hover:scale-105 ease-out	duration-300 ">
-              <Link to="/contacts/1">
+              <Link to={`/contacts/${person.id}`}>
                 <div className="flex min-w-0 gap-x-4 md:flex-col">
                   <img
                     className="h-12 w-12 flex-none rounded-full bg-gray-50 md:h-full md:w-full md:rounded-md object-cover"
                     src={getAvatar(person.gender)}
                     alt=""
                   />
-                  <div className="min-w-0 flex-auto text-center">
+                  <div className="min-w-0 flex-auto text-center md:mt-3">
                     <p className="text-sm font-semibold leading-6 text-white">
                       {person?.firstName} {person?.lastName}
                     </p>
-                    <p className="mt-1 truncate text-xs leading-5 text-white">
+                    <p className="mt-1 truncate text-xs leading-5 text-white md:text-center text-left">
                       {person.designation}
                     </p>
                   </div>
@@ -57,11 +57,11 @@ export default function ContactComponent() {
               <a
                 href={`tel:${person?.contact_number}`}
                 className=" shrink-0 sm:flex sm:flex-col sm:items-end items-center flex md:flex-col md:items-center md:bg-indigo-600 md:rounded-lg md:m-5 ">
-                <div className="flex gap-5 p-3 text-white justify-between">
-                  <div className="hidden md:block text-lg">
+                <div className="flex gap-5 p-3 text-white justify-between md:items-center">
+                  <div className="hidden md:block text-lg md:text-sm">
                     Click here to call
                   </div>
-                  <div className="cursor-pointer text-lg">
+                  <div className="cursor-pointer text-lg md:text-sm">
                     <FaPhoneAlt />
                   </div>
                 </div>
