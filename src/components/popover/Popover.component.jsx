@@ -31,6 +31,13 @@ const PopoverComponent = ({ children, id }) => {
                 Edit Profile
               </button>
             </Link>
+            <Link className="pt-4" to={`/update_password/${id}`}>
+              <button
+                type="submit"
+                className=" text-indigo-600 hover:text-indigo-500  rounded-m px-3  text-sm font-semibold  text-center text-nowrap w-full">
+                Update password
+              </button>
+            </Link>
             <div
               className="text-sm  float-start cursor-pointer mt-2"
               onClick={handleLogOut}>
