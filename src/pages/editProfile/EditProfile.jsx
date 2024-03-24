@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import Header from "../../components/header/Header";
 
-const SignupPage = () => {
-  const [err, setErr] = useState("");
+const EditProfile = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     firstName: "",
@@ -15,8 +17,6 @@ const SignupPage = () => {
     department: "",
     email: "",
     contact: "",
-    password: "",
-    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -27,47 +27,65 @@ const SignupPage = () => {
     });
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  // const handleRegister = async (e) => {
+  //   e.preventDefault();
 
-    if (formValues.password !== formValues.confirmPassword) {
-      alert("Password did not match");
-      return;
-    }
-    const data = {
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
-      address: formValues.address,
-      contact_number: formValues.contact,
-      email: formValues.email,
-      designation: formValues.desination,
-      department: formValues.department,
-      gender: formValues.gender,
-      password: formValues.password,
-    };
-    const response = await axios.post(`/api/register`, data);
-    console.log(err);
-    if (response.status === 200) {
-      navigate("/");
-    } else {
-      setErr(response);
-    }
+  //   if (formValues.password !== formValues.confirmPassword) {
+  //     alert("Password did not match");
+  //     return;
+  //   }
+  //   const data = {
+  //     firstName: formValues.firstName,
+  //     lastName: formValues.lastName,
+  //     address: formValues.address,
+  //     contact_number: formValues.contact,
+  //     email: formValues.email,
+  //     designation: formValues.desination,
+  //     department: formValues.department,
+  //     gender: formValues.gender,
+  //   };
+  //   const response = await axios.post(`/api/register`, data);
+  //   if (response.status === 200) {
+  //     navigate("/");
+  //   }
+  // };
+  const handleBack = () => {
+    navigate("/contacts");
   };
-  console.log("formValues", err.msg === undefined);
+
+  const getSingleData = async () => {
+    const response = await axios.get(`/api/employees/${id}`);
+    console.log("response", response);
+    setFormValues({
+      firstName: response[0].firstName,
+      lastName: response[0].lastName,
+      address: response[0].address,
+      contact: response[0].contact_number,
+      email: response[0].email,
+      desination: response[0].designation,
+      department: response[0].department,
+      gender: response[0].gender,
+    });
+  };
+  console.log("formValues", formValues);
+  useEffect(() => {
+    getSingleData();
+  }, []);
   return (
     <div className="bg-discount-gradient w-full">
+      <Header />
       <Container>
+        <div
+          className="text-white text-xl px-5 cursor-pointer"
+          onClick={handleBack}>
+          <IoMdArrowRoundBack />
+        </div>
         <div className="flex justify-center items-center">
-          <form onSubmit={handleRegister}>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 pt-12 lg:px-8">
+          <form>
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img
-                  className=" w-auto"
-                  src="https://salapabikasbank.com.np/them_img/22-Dec-2020-10-12-36logo-main.png"
-                  alt="Your Company"
-                />
                 <h2 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-gradient">
-                  Sign in to your account
+                  Update your account
                 </h2>
               </div>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-5  sm:grid-cols-6">
@@ -84,6 +102,7 @@ const SignupPage = () => {
                       id="first-name"
                       autoComplete="given-name"
                       onChange={handleChange}
+                      value={formValues?.firstName}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                     />
                   </div>
@@ -102,6 +121,7 @@ const SignupPage = () => {
                       id="last-name"
                       onChange={handleChange}
                       autoComplete="family-name"
+                      value={formValues?.lastName}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                     />
                   </div>
@@ -121,6 +141,7 @@ const SignupPage = () => {
                       id="first-name"
                       autoComplete="given-name"
                       onChange={handleChange}
+                      value={formValues?.address}
                       placeholder="Write your branch address"
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                     />
@@ -138,6 +159,7 @@ const SignupPage = () => {
                       name="gender"
                       autoComplete="gender"
                       onChange={handleChange}
+                      value={formValues?.gender}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
                       <option>Select a gender</option>
                       <option>M</option>
@@ -159,6 +181,7 @@ const SignupPage = () => {
                       name="desination"
                       autoComplete="desination"
                       onChange={handleChange}
+                      value={formValues?.desination}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
                       <option>Select a desination</option>
                       <option>CEO</option>
@@ -183,6 +206,7 @@ const SignupPage = () => {
                       name="department"
                       autoComplete="department"
                       onChange={handleChange}
+                      value={formValues?.department}
                       className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
                       <option>Select a department</option>
                       <option>IT</option>
@@ -209,6 +233,7 @@ const SignupPage = () => {
                         type="email"
                         autoComplete="email"
                         onChange={handleChange}
+                        value={formValues?.email}
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                       />
@@ -227,76 +252,19 @@ const SignupPage = () => {
                         type="text"
                         autoComplete="contact"
                         onChange={handleChange}
+                        value={formValues?.contact}
                         required
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                       />
                     </div>
                   </div>
-
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium leading-6 text-white">
-                        Password
-                      </label>
-                    </div>
-                    <div className="mt-2">
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        onChange={handleChange}
-                        autoComplete="current-password"
-                        onFocus={() => setErr("")}
-                        onBlur={() => setErr("")}
-                        required
-                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm font-medium leading-6 text-white">
-                        Confirm Password
-                      </label>
-                    </div>
-                    <div className="mt-2">
-                      <input
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        type="password"
-                        autoComplete="current-password"
-                        onChange={handleChange}
-                        onFocus={() => setErr("")}
-                        onBlur={() => setErr("")}
-                        required
-                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div
-                    className={`text-red-500 text-center text-sm ${
-                      err.msg && err?.msg.length > 0 ? "block" : "hidden"
-                    }`}>
-                    {err.msg && err?.msg}
-                  </div>
-                  <div>
+                  <div className="pb-44">
                     <button
                       type="submit"
                       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      Sign Up
+                      Update
                     </button>
                   </div>
-                </div>
-                <div className="text-sm mt-6 float-end pb-14">
-                  <Link
-                    to="/"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Already exists account ?
-                  </Link>
                 </div>
               </div>
             </div>
@@ -307,4 +275,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default EditProfile;

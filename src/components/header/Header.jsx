@@ -6,7 +6,7 @@ import useImage from "../../hooks/useImage";
 import storage from "../../utils/storage";
 
 const Header = () => {
-  const { gender } = storage.getToken();
+  const { gender, id, name } = storage.getToken();
   const [getAvatar] = useImage();
 
   return (
@@ -23,10 +23,11 @@ const Header = () => {
               alt="Your Company"
             /> */}
           </div>
-          <div className="text-white text-3xl p-3">
-            <PopoverComponent>
+          <div className="text-white text-3xl p-3 flex items-center justify-between gap-1">
+            <PopoverComponent id={id}>
               <Avatars url={getAvatar(gender)} />
             </PopoverComponent>
+            <div className="text-white text-sm whitespace-nowrap">{name} </div>
           </div>
         </div>
       </Container>
