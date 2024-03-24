@@ -10,7 +10,7 @@ function App() {
   const token = storage.getToken();
   const navigate = useNavigate();
   useEffect(() => {
-    if (token) {
+    if (token?.token) {
       navigate("/contacts");
     } else {
       navigate("/");

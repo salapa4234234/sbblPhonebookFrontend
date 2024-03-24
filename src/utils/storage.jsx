@@ -5,7 +5,6 @@ const storage = {
     return JSON.parse(window.localStorage.getItem(`${storage_prefix}token`));
   },
   setToken: (token) => {
-    console.log("setToken", token);
     window.localStorage.setItem(
       `${storage_prefix}token`,
       JSON.stringify(token)

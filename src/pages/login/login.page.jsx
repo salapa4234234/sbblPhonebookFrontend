@@ -21,14 +21,13 @@ const LoginPage = () => {
     };
     const response = await axios.post(`/api/login`, data);
     if (response.status === 200) {
-      console.log("Success", response.token);
-      storage.setToken(response.token);
+      storage.setToken(response);
       navigate("/contacts");
+      console.log("Success", response);
     } else {
       setError(response.message);
     }
   };
-  console.log("error", error);
   return (
     <div className="bg-discount-gradient w-full overflow-hidden h-screen">
       <Container>

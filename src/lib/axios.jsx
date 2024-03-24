@@ -3,8 +3,8 @@ import storage from "../utils/storage";
 
 function authRequestInterceptor(config) {
   const token = storage.getToken();
-  if (token) {
-    config.headers.authorization = `${token}`;
+  if (token?.token) {
+    config.headers.authorization = `${token?.token}`;
   }
   config.headers.Accept = "application/json";
   return config;
