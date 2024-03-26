@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import "./index.css";
 import { Theme } from "@radix-ui/themes";
 import { BrowserRouter } from "react-router-dom";
+import ContactProvider from "./context/Contact.context.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Theme>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ContactProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ContactProvider>
     </Theme>
   </React.StrictMode>
 );

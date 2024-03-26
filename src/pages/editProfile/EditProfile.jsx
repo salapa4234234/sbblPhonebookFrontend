@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../../components/header/Header";
+import { ContactContext } from "../../context/Contact.context";
 
 const EditProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { setDetails } = useContext(ContactContext);
+
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -27,35 +30,29 @@ const EditProfile = () => {
     });
   };
 
-  // const handleRegister = async (e) => {
-  //   e.preventDefault();
-
-  //   if (formValues.password !== formValues.confirmPassword) {
-  //     alert("Password did not match");
-  //     return;
-  //   }
-  //   const data = {
-  //     firstName: formValues.firstName,
-  //     lastName: formValues.lastName,
-  //     address: formValues.address,
-  //     contact_number: formValues.contact,
-  //     email: formValues.email,
-  //     designation: formValues.desination,
-  //     department: formValues.department,
-  //     gender: formValues.gender,
-  //   };
-  //   const response = await axios.post(`/api/register`, data);
-  //   if (response.status === 200) {
-  //     navigate("/");
-  //   }
-  // };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const data = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      address: formValues.address,
+      contact_number: formValues.contact,
+      designation: formValues.desination,
+      department: formValues.department,
+      gender: formValues.gender,
+    };
+    const response = await axios.patch(`/api/update_profile/${id}`, data);
+    if (response.status === 200) {
+      alert("Successfully updated");
+      getSingleData();
+    }
+  };
   const handleBack = () => {
     navigate("/contacts");
   };
 
   const getSingleData = async () => {
     const response = await axios.get(`/api/employees/${id}`);
-    console.log("response", response);
     setFormValues({
       firstName: response[0].firstName,
       lastName: response[0].lastName,
@@ -66,8 +63,11 @@ const EditProfile = () => {
       department: response[0].department,
       gender: response[0].gender,
     });
+    setDetails({
+      firstName: response[0].firstName,
+      lastName: response[0].lastName,
+    });
   };
-  console.log("formValues", formValues);
   useEffect(() => {
     getSingleData();
   }, []);
@@ -81,7 +81,7 @@ const EditProfile = () => {
           <IoMdArrowRoundBack />
         </div>
         <div className="flex justify-center items-center">
-          <form>
+          <form onSubmit={handleUpdate}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-gradient">
@@ -235,7 +235,8 @@ const EditProfile = () => {
                         onChange={handleChange}
                         value={formValues?.email}
                         required
-                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                        disabled
+                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm "
                       />
                     </div>
                   </div>

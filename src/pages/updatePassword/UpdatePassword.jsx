@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
-import { useNavigate } from "react-router-dom";
 import storage from "../../utils/storage";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../../components/header/Header";
 
 const UpdatePassword = () => {
@@ -31,10 +31,18 @@ const UpdatePassword = () => {
   //       setError(response.message);
   //     }
   //   };
+  const handleBack = () => {
+    navigate("/contacts");
+  };
   return (
     <div className="bg-discount-gradient w-full overflow-hidden h-screen">
       <Header />
       <Container>
+        <div
+          className="text-white text-xl px-5 cursor-pointer"
+          onClick={handleBack}>
+          <IoMdArrowRoundBack />
+        </div>
         <div className="flex justify-center items-center">
           <form>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">

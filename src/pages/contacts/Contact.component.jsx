@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Container from "../../components/container/Container";
 import { FaPhoneAlt } from "react-icons/fa";
 import Header from "../../components/header/Header";
@@ -6,19 +6,29 @@ import { axios } from "../../lib/axios";
 import { Link } from "react-router-dom";
 import useImage from "../../hooks/useImage";
 import storage from "../../utils/storage";
+import { ContactContext } from "../../context/Contact.context";
 
 export default function ContactComponent() {
   const [data, setData] = useState([]);
   const [getAvatar] = useImage();
   const { id } = storage.getToken();
+  const { setDetails } = useContext(ContactContext);
 
   const getDatas = async () => {
     const response = await axios.get("/api/employees");
     setData(response);
   };
+  const singleData = async () => {
+    const response = await axios.get(`/api/employees/${id}`);
+    setDetails({
+      firstName: response[0]?.firstName,
+      lastName: response[0]?.lastName,
+    });
+  };
 
   useEffect(() => {
     getDatas();
+    singleData();
   }, []);
   return (
     <div className="bg-discount-gradient w-full pb-96 ">
