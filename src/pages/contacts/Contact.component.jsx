@@ -7,15 +7,17 @@ import { Link } from "react-router-dom";
 import useImage from "../../hooks/useImage";
 import storage from "../../utils/storage";
 import { ContactContext } from "../../context/Contact.context";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export default function ContactComponent() {
   const [data, setData] = useState([]);
+  const [value, setValue] = useState("");
   const [getAvatar] = useImage();
   const { id } = storage.getToken();
   const { setDetails } = useContext(ContactContext);
-
+  const debounceValue = useDebounce(value, 500);
   const getDatas = async () => {
-    const response = await axios.get("/api/employees");
+    const response = await axios.get(`/api/employees?query=${debounceValue}`);
     setData(response);
   };
   const singleData = async () => {
@@ -28,8 +30,11 @@ export default function ContactComponent() {
 
   useEffect(() => {
     getDatas();
+  }, [debounceValue]);
+  useEffect(() => {
     singleData();
-  }, []);
+  });
+  console.log("data", data);
   return (
     <div className="bg-discount-gradient w-full pb-96 ">
       <Header />
@@ -40,13 +45,14 @@ export default function ContactComponent() {
             name="search"
             type="search"
             placeholder="Search..."
+            onChange={(e) => setValue(e.target.value)}
             className="block w-full rounded-md py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:bg-blue-gradient sm:text-sm sm:leading-6"
           />
         </div>
         <ul
           role="list"
           className="divide-y divide-gray-100 md:grid grid-cols-3 md:pt-3">
-          {data
+          {data.data
             .filter((data) => data.id !== id)
             .map((person) => (
               <li
@@ -83,7 +89,7 @@ export default function ContactComponent() {
                 </a>
               </li>
             ))}
-          {data.length === 0 && (
+          {data.data.length === 0 && (
             <>
               <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
                 <div className="animate-pulse flex space-x-4">
