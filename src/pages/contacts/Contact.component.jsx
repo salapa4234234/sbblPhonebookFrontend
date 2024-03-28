@@ -33,7 +33,7 @@ export default function ContactComponent() {
   }, [debounceValue]);
   useEffect(() => {
     singleData();
-  });
+  }, []);
   console.log("data", data);
   return (
     <div className="bg-discount-gradient w-full pb-96 ">
