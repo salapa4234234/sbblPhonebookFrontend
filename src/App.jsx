@@ -7,6 +7,7 @@ import UpdatePassword from "./pages/updatePassword/UpdatePassword";
 import EditProfile from "./pages/editProfile/EditProfile";
 import storage from "./utils/storage";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const token = storage.getToken();
@@ -33,6 +34,13 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
         </Routes>
       )}
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        toastOptions={{
+          className: "text-sm",
+        }}
+      />
     </>
   );
 }

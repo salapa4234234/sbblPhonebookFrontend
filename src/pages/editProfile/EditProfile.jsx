@@ -5,6 +5,7 @@ import { axios } from "../../lib/axios";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../../components/header/Header";
 import { ContactContext } from "../../context/Contact.context";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ const EditProfile = () => {
     email: "",
     contact: "",
   });
+  const notify = () => toast.success("Successfully updated profile !");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +45,9 @@ const EditProfile = () => {
     };
     const response = await axios.patch(`/api/update_profile/${id}`, data);
     if (response.status === 200) {
-      alert("Successfully updated");
+      notify();
       getSingleData();
+      navigate("/contacts");
     }
   };
   const handleBack = () => {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [err, setErr] = useState("");
@@ -18,6 +19,7 @@ const SignupPage = () => {
     password: "",
     confirmPassword: "",
   });
+  const notify = () => toast.success("Successfully register !");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +33,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     if (formValues.password !== formValues.confirmPassword) {
-      alert("Password did not match");
+      setErr({ msg: "Password did not match" });
       return;
     }
     const data = {
@@ -49,11 +51,12 @@ const SignupPage = () => {
     console.log(err);
     if (response.status === 200) {
       navigate("/");
+      notify();
     } else {
       setErr(response);
     }
   };
-  console.log("formValues", err.msg === undefined);
+  console.log("formValues", err);
   return (
     <div className="bg-discount-gradient w-full">
       <Container>

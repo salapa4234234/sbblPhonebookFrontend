@@ -5,6 +5,7 @@ import { axios } from "../../lib/axios";
 import storage from "../../utils/storage";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../../components/header/Header";
+import toast from "react-hot-toast";
 
 const UpdatePassword = () => {
   const [error, setError] = useState("");
@@ -14,6 +15,9 @@ const UpdatePassword = () => {
   });
   const navigate = useNavigate();
   const { id } = storage.getToken();
+  const notify = () =>
+    toast.success("Successfully updated Password login please again !");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -34,6 +38,7 @@ const UpdatePassword = () => {
     if (response.status === 200) {
       navigate("/");
       storage.clearToken();
+      notify();
     } else {
       setError(response.message);
     }

@@ -4,11 +4,14 @@ import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import storage from "../../utils/storage";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const notify = () => toast.success("Successfully login !");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -23,7 +26,7 @@ const LoginPage = () => {
     if (response.status === 200) {
       storage.setToken(response);
       navigate("/contacts");
-      console.log("Success", response);
+      notify();
     } else {
       setError(response.message);
     }
