@@ -32,7 +32,7 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="bg-discount-gradient w-full overflow-hidden h-screen">
+    <div className="w-full h-screen ">
       <Container>
         <div className="flex justify-center items-center">
           <form onSubmit={handleLogin}>

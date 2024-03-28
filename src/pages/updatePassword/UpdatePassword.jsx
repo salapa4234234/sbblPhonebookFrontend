@@ -47,7 +47,7 @@ const UpdatePassword = () => {
     navigate("/contacts");
   };
   return (
-    <div className="bg-discount-gradient w-full overflow-hidden h-screen">
+    <div className="w-full h-screen ">
       <Header />
       <Container>
         <div

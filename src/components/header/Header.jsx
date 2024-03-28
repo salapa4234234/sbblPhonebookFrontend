@@ -7,6 +7,7 @@ import Avatars from "../avator/Avator";
 import useImage from "../../hooks/useImage";
 import storage from "../../utils/storage";
 import { ContactContext } from "../../context/Contact.context";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { gender, id } = storage.getToken();
@@ -17,9 +18,9 @@ const Header = () => {
     <div>
       <Container>
         <div className="flex items-center justify-between pt-2">
-          <div className="text-white text-2xl">
+          <Link className="text-white text-3xl" to="/contacts">
             <FaPeopleRoof />
-          </div>
+          </Link>
           <div className="md:w-1/3 w-3/4">
             {/* <img
               className=" w-auto"

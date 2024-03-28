@@ -56,9 +56,8 @@ const SignupPage = () => {
       setErr(response);
     }
   };
-  console.log("formValues", err);
   return (
-    <div className="bg-discount-gradient w-full">
+    <div className=" w-full">
       <Container>
         <div className="flex justify-center items-center">
           <form onSubmit={handleRegister}>

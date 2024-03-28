@@ -25,7 +25,7 @@ const PersonComponent = () => {
     getSingleData();
   }, []);
   return (
-    <div className="bg-discount-gradient w-full h-screen overflow-hidden ">
+    <div className="w-full h-screen">
       <Header />
       <Container>
         <div
