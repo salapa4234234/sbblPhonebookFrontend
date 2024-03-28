@@ -36,7 +36,7 @@ export default function ContactComponent() {
   }, []);
   console.log("data", data);
   return (
-    <div className=" w-full h-screen">
+    <div className=" w-full md:h-screen">
       <Header />
       <Container>
         <div className="mt-2 mb-6 md:w-1/4 m-auto w-full">

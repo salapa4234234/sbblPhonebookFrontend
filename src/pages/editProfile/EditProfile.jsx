@@ -75,7 +75,7 @@ const EditProfile = () => {
     getSingleData();
   }, []);
   return (
-    <div className=" w-full h-screen">
+    <div className=" w-full md:h-screen">
       <Header />
       <Container>
         <div
