@@ -9,18 +9,26 @@ import toast from "react-hot-toast";
 
 const UpdatePassword = () => {
   const [error, setError] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const [formValues, setFormValues] = useState({
     password: "",
     confirmPassword: "",
   });
   const navigate = useNavigate();
   const { id } = storage.getToken();
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\\[\]:;<>,.?/~]).{6,}$/;
+
+  const isValidPassword = (password) => {
+    return passwordRegex.test(password);
+  };
   const notify = () =>
     toast.success("Successfully updated Password login please again !");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    setIsValid(isValidPassword(formValues?.password));
   };
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,6 +54,7 @@ const UpdatePassword = () => {
   const handleBack = () => {
     navigate("/contacts");
   };
+  console.log("hello", isValid);
   return (
     <div className="w-full h-screen ">
       <Header />
@@ -81,12 +90,22 @@ const UpdatePassword = () => {
                         required
                         onChange={handleChange}
                         onFocus={() => setError("")}
-                        onBlur={() => setError("")}
+                        onBlur={() => {
+                          setError("");
+                          setIsValid(false);
+                        }}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
-
+                  <div
+                    className={`text-red-500 text-center text-sm ${
+                      isValid ? "hidden" : "block"
+                    }`}>
+                    Password must contain at least 6 characters including at
+                    least one uppercase letter, one lowercase letter, one digit,
+                    and one special character
+                  </div>
                   <div>
                     <div className="flex items-center justify-between">
                       <label
@@ -104,7 +123,9 @@ const UpdatePassword = () => {
                         required
                         onChange={handleChange}
                         onFocus={() => setError("")}
-                        onBlur={() => setError("")}
+                        onBlur={() => {
+                          setError("");
+                        }}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
                     </div>

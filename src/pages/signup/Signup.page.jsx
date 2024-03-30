@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 const SignupPage = () => {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -20,13 +21,19 @@ const SignupPage = () => {
     confirmPassword: "",
   });
   const notify = () => toast.success("Successfully register !");
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\\[\]:;<>,.?/~]).{6,}$/;
 
+  const isValidPassword = (password) => {
+    return passwordRegex.test(password);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
       [name]: value,
     });
+    setIsValid(isValidPassword(formValues?.password));
   };
 
   const handleRegister = async (e) => {
@@ -256,6 +263,14 @@ const SignupPage = () => {
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                       />
                     </div>
+                  </div>
+                  <div
+                    className={`text-red-500 text-center text-sm ${
+                      isValid ? "hidden" : "block"
+                    }`}>
+                    Password must contain at least 6 characters including at
+                    least one uppercase letter, one lowercase letter, one digit,
+                    and one special character
                   </div>
                   <div>
                     <div className="flex items-center justify-between">
