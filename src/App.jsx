@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/login/login.page";
 import SignupPage from "./pages/signup/Signup.page";
 import ContactComponent from "./pages/contacts/Contact.component";
@@ -6,19 +6,20 @@ import PersonComponent from "./pages/person/Person.component";
 import UpdatePassword from "./pages/updatePassword/UpdatePassword";
 import EditProfile from "./pages/editProfile/EditProfile";
 import storage from "./utils/storage";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import Verified from "./pages/verify/Verified";
 
 function App() {
   const token = storage.getToken();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (token?.token) {
-      navigate("/contacts");
-    } else {
-      navigate("/");
-    }
-  }, []);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (token?.token) {
+  //     navigate("/contacts");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, []);
   return (
     <>
       {token ? (
@@ -32,6 +33,10 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/email-verification/:email/varify/:token"
+            element={<Verified />}
+          />
         </Routes>
       )}
       <Toaster
