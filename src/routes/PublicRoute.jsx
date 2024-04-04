@@ -1,9 +1,9 @@
 import { Outlet, Navigate } from "react-router-dom";
 import storage from "../utils/storage";
 
-const PrivateRoutes = () => {
+const PublicRoute = () => {
   const token = storage.getToken();
-  return token ? <Outlet /> : <Navigate to="/" />;
+  return !token ? <Outlet /> : <Navigate to="/contacts" />;
 };
 
-export default PrivateRoutes;
+export default PublicRoute;

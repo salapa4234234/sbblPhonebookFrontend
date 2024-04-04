@@ -10,6 +10,7 @@ import Verified from "./pages/verify/Verified";
 import ForgetPasword from "./pages/forgetPassword/ForgetPasword";
 import ForgetUpdatePassword from "./pages/forgetUpdatePassword/ForgetUpdatePassword";
 import PrivateRoutes from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
 function App() {
   return (
     <>
@@ -22,18 +23,20 @@ function App() {
           <Route path="/edit_profile/:id" element={<EditProfile />} />
           <Route path="/update_password/:id" element={<UpdatePassword />} />
         </Route>
-        <Route element={<LoginPage />} path="/" />
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route
-          path="/email-verification/:email/varify/:token"
-          element={<Verified />}
-        />
-        <Route path="/forget-password" element={<ForgetPasword />} />
-        <Route
-          path="/forget-password/:email"
-          element={<ForgetUpdatePassword />}
-        />
+        <Route element={<PublicRoute />}>
+          <Route element={<LoginPage />} path="/" />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/email-verification/:email/varify/:token"
+            element={<Verified />}
+          />
+          <Route path="/forget-password" element={<ForgetPasword />} />
+          <Route
+            path="/forget-password/:email"
+            element={<ForgetUpdatePassword />}
+          />
+        </Route>
       </Routes>
 
       <Toaster
