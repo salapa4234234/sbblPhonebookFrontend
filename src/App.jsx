@@ -9,6 +9,8 @@ import storage from "./utils/storage";
 // import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import Verified from "./pages/verify/Verified";
+import ForgetPasword from "./pages/forgetPassword/ForgetPasword";
+import ForgetUpdatePassword from "./pages/forgetUpdatePassword/ForgetUpdatePassword";
 
 function App() {
   const token = storage.getToken();
@@ -36,6 +38,11 @@ function App() {
           <Route
             path="/email-verification/:email/varify/:token"
             element={<Verified />}
+          />
+          <Route path="/forget-password" element={<ForgetPasword />} />
+          <Route
+            path="/forget-password/:email"
+            element={<ForgetUpdatePassword />}
           />
         </Routes>
       )}
