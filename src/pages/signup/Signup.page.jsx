@@ -20,7 +20,8 @@ const SignupPage = () => {
     password: "",
     confirmPassword: "",
   });
-  const notify = () => toast.success("Successfully register !");
+  const notify = () =>
+    toast.success("Sucessfuly sent email. Please verify email !");
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\\[\]:;<>,.?/~]).{6,}$/;
 
@@ -40,7 +41,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     if (formValues.password !== formValues.confirmPassword) {
-      setErr({ msg: "Password did not match" });
+      setErr({ msg: "Password did not match with confirm password !" });
       return;
     }
     const data = {
@@ -66,9 +67,9 @@ const SignupPage = () => {
   return (
     <div className=" w-full">
       <Container>
-        <div className="flex justify-center items-center">
-          <form onSubmit={handleRegister}>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 pt-12 lg:px-8">
+        <div className="flex justify-center items-center md:w-[60%] md:m-auto ">
+          <form onSubmit={handleRegister} className="w-full">
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 pt-12 lg:px-8 md:w-[60%] md:m-auto">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                   className=" w-auto"
@@ -93,7 +94,7 @@ const SignupPage = () => {
                       id="first-name"
                       autoComplete="given-name"
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                     />
                   </div>
                 </div>
@@ -111,7 +112,7 @@ const SignupPage = () => {
                       id="last-name"
                       onChange={handleChange}
                       autoComplete="family-name"
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                     />
                   </div>
                 </div>
@@ -131,7 +132,7 @@ const SignupPage = () => {
                       autoComplete="given-name"
                       onChange={handleChange}
                       placeholder="Write your branch address"
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                     />
                   </div>
                 </div>
@@ -147,7 +148,7 @@ const SignupPage = () => {
                       name="gender"
                       autoComplete="gender"
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize ">
                       <option>Select a gender</option>
                       <option>M</option>
                       <option>F</option>
@@ -168,7 +169,7 @@ const SignupPage = () => {
                       name="desination"
                       autoComplete="desination"
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize">
                       <option>Select a desination</option>
                       <option>CEO</option>
                       <option>Manager</option>
@@ -192,7 +193,7 @@ const SignupPage = () => {
                       name="department"
                       autoComplete="department"
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize">
                       <option>Select a department</option>
                       <option>IT</option>
                       <option>Teller</option>
@@ -203,7 +204,7 @@ const SignupPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="mt-7">
                 <div className="space-y-6">
                   <div>
                     <label
@@ -237,6 +238,7 @@ const SignupPage = () => {
                         autoComplete="contact"
                         onChange={handleChange}
                         required
+                        maxLength="10"
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
                       />
                     </div>

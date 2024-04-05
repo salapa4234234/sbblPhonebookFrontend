@@ -47,10 +47,10 @@ const PersonComponent = () => {
                   alt={person.firstName}
                 />
                 <div className="min-w-0 flex-auto text-center my-4 ">
-                  <p className="text-sm font-semibold leading-6 text-white">
+                  <p className="text-sm font-semibold leading-6 text-white capitalize">
                     {person?.firstName} {person?.lastName}
                   </p>
-                  <p className="mt-1 truncate text-xs leading-5 text-white">
+                  <p className="mt-1 truncate text-xs leading-5 text-white capitalize">
                     {person.designation}
                   </p>
                 </div>

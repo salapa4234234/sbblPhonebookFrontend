@@ -34,7 +34,7 @@ export default function ContactComponent() {
   useEffect(() => {
     singleData();
   }, []);
-  console.log("data", data);
+
   return (
     <div className=" w-full md:h-screen">
       <Header />
@@ -67,10 +67,10 @@ export default function ContactComponent() {
                         alt=""
                       />
                       <div className="min-w-0 flex-auto text-center md:mt-3">
-                        <p className="text-sm font-semibold leading-6 text-white">
+                        <p className="text-sm font-semibold leading-6 text-white capitalize">
                           {person?.firstName} {person?.lastName}
                         </p>
-                        <p className="mt-1 truncate text-xs leading-5 text-white md:text-center text-left">
+                        <p className="mt-1 truncate text-xs leading-5 text-white md:text-center text-left capitalize">
                           {person.designation}
                         </p>
                       </div>

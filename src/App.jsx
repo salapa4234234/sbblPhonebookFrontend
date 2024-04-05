@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import LoginPage from "./pages/login/login.page";
 import SignupPage from "./pages/signup/Signup.page";
 import ContactComponent from "./pages/contacts/Contact.component";
@@ -12,19 +13,25 @@ import ForgetUpdatePassword from "./pages/forgetUpdatePassword/ForgetUpdatePassw
 import PrivateRoutes from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
 function App() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <>
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route element={<ContactComponent />} path="/contacts" exact />
-          <Route element={<ContactComponent />} path="/contacts/:id" exact />
-          <Route path="/contacts" element={<ContactComponent />} />
-          <Route path="/contacts/:id" element={<PersonComponent />} />
-          <Route path="/edit_profile/:id" element={<EditProfile />} />
-          <Route path="/update_password/:id" element={<UpdatePassword />} />
+          <Route path="/contacts" element={<ContactComponent />} exact />
+          <Route path="/contacts/:id" element={<PersonComponent />} exact />
+          <Route path="/edit_profile/:id" element={<EditProfile />} exact />
+          <Route
+            path="/update_password/:id"
+            element={<UpdatePassword />}
+            exact
+          />
         </Route>
         <Route element={<PublicRoute />}>
-          <Route element={<LoginPage />} path="/" />
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route

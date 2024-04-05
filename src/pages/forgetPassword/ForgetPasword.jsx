@@ -11,7 +11,7 @@ const ForgetPasword = () => {
     email: email,
   };
   const notify = () =>
-    toast.success("Successfully sent emaily ,please emailto forget password !");
+    toast.success("Successfully sent emaily. Please check your email box!");
 
   const handleForget = async (e) => {
     e.preventDefault();
@@ -23,11 +23,11 @@ const ForgetPasword = () => {
     }
   };
   return (
-    <div>
+    <div className="h-screen">
       <main
         id="content"
         role="main"
-        className="w-full  max-w-md mx-auto p-6 h-screen">
+        className="w-full  max-w-md mx-auto p-6 h-full">
         <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
           <div className="p-4 sm:p-7">
             <div className="text-center">

@@ -79,13 +79,13 @@ const EditProfile = () => {
       <Header />
       <Container>
         <div
-          className="text-white text-xl px-5 cursor-pointer"
+          className="text-white text-xl px-5 cursor-pointer "
           onClick={handleBack}>
           <IoMdArrowRoundBack />
         </div>
-        <div className="flex justify-center items-center">
-          <form onSubmit={handleUpdate}>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
+        <div className="flex justify-center items-center md:w-[60%] md:m-auto">
+          <form onSubmit={handleUpdate} className="w-full">
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8  md:w-[60%] md:m-auto">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-gradient">
                   Update your account
@@ -106,7 +106,7 @@ const EditProfile = () => {
                       autoComplete="given-name"
                       onChange={handleChange}
                       value={formValues?.firstName}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize "
                     />
                   </div>
                 </div>
@@ -125,7 +125,7 @@ const EditProfile = () => {
                       onChange={handleChange}
                       autoComplete="family-name"
                       value={formValues?.lastName}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                     />
                   </div>
                 </div>
@@ -146,7 +146,7 @@ const EditProfile = () => {
                       onChange={handleChange}
                       value={formValues?.address}
                       placeholder="Write your branch address"
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                     />
                   </div>
                 </div>
@@ -163,7 +163,7 @@ const EditProfile = () => {
                       autoComplete="gender"
                       onChange={handleChange}
                       value={formValues?.gender}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize">
                       <option>Select a gender</option>
                       <option>M</option>
                       <option>F</option>
@@ -185,7 +185,7 @@ const EditProfile = () => {
                       autoComplete="desination"
                       onChange={handleChange}
                       value={formValues?.desination}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize">
                       <option>Select a desination</option>
                       <option>CEO</option>
                       <option>Manager</option>
@@ -210,7 +210,7 @@ const EditProfile = () => {
                       autoComplete="department"
                       onChange={handleChange}
                       value={formValues?.department}
-                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm">
+                      className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-sm capitalize">
                       <option>Select a department</option>
                       <option>IT</option>
                       <option>Teller</option>
@@ -239,7 +239,7 @@ const EditProfile = () => {
                         value={formValues?.email}
                         required
                         disabled
-                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm "
+                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm  "
                       />
                     </div>
                   </div>
@@ -258,7 +258,8 @@ const EditProfile = () => {
                         onChange={handleChange}
                         value={formValues?.contact}
                         required
-                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm"
+                        maxLength="10"
+                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6 text-sm capitalize"
                       />
                     </div>
                   </div>

@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const UpdatePassword = () => {
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
+  console.log("isValid", isValid);
   const [formValues, setFormValues] = useState({
     password: "",
     confirmPassword: "",
@@ -65,7 +66,7 @@ const UpdatePassword = () => {
           <IoMdArrowRoundBack />
         </div>
         <div className="flex justify-center items-center">
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="w-full">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-gradient">
@@ -122,9 +123,11 @@ const UpdatePassword = () => {
                         autoComplete="confirmPassword"
                         required
                         onChange={handleChange}
-                        onFocus={() => setError("")}
                         onBlur={() => {
-                          setError("");
+                          setIsValid(true);
+                        }}
+                        onFocus={() => {
+                          setIsValid(true);
                         }}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />

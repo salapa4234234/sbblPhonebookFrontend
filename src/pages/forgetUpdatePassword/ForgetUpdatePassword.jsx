@@ -21,7 +21,7 @@ const ForgetUpdatePassword = () => {
     return passwordRegex.test(password);
   };
   const notify = () =>
-    toast.success("Successfully updated Password login please again !");
+    toast.success("Successfully updated password. Please login again !");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +32,7 @@ const ForgetUpdatePassword = () => {
     e.preventDefault();
 
     if (formValues.password !== formValues.confirmPassword) {
-      setError("Password did not match");
+      setError("Password did not match with confirm password !");
       return;
     }
 
@@ -68,7 +68,7 @@ const ForgetUpdatePassword = () => {
           <IoMdArrowRoundBack />
         </div>
         <div className="flex justify-center items-center">
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="w-full">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-gradient">
