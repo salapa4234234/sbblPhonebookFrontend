@@ -11,7 +11,7 @@ function authRequestInterceptor(config) {
 }
 
 export const axios = Axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://sbbl-backend-8.onrender.com",
 });
 
 axios.interceptors.request.use(authRequestInterceptor);
