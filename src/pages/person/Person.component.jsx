@@ -79,8 +79,12 @@ const PersonComponent = () => {
                 <h3 className="text-white text-center p-3 mt-4">Details</h3>
                 <div className="p-[0.2px] bg-slate-50"></div>
                 <div className="text-center mt-3">
-                  <p className="text-white text-sm">Address : Khotang</p>
-                  <p className="text-white text-sm">Department : IT</p>
+                  <p className="text-white text-sm">
+                    Address : {person.address}
+                  </p>
+                  <p className="text-white text-sm">
+                    Department : {person?.department}
+                  </p>
                 </div>
               </div>
             </li>
