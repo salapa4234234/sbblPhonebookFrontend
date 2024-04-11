@@ -19,9 +19,9 @@ const Header = () => {
       <Container>
         <div className="flex items-center justify-between pt-2">
           <Link className="text-white text-3xl" to="/contacts">
-            <div className="w-[80%] md:w-[13%] ">
+            <div className="max-w-[70px]">
               <img
-                className=" w-[50%] object-cover"
+                className=" w-full h-full object-cover"
                 src={logo}
                 alt="Your Company"
               />
