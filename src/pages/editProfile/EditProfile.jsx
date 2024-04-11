@@ -242,6 +242,9 @@ const EditProfile = () => {
                       <option>Coporate</option>
                       <option>CSD</option>
                       <option>MF</option>
+                      <option>BM</option>
+                      <option>Loan</option>
+                      <option>Other</option>
                     </select>
                   </div>
                 </div>
