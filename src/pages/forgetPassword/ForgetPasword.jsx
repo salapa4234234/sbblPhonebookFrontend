@@ -7,6 +7,7 @@ import { useState } from "react";
 const ForgetPasword = () => {
   const [email, setEmail] = useState("");
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
   const data = {
     email: email,
   };
@@ -15,11 +16,20 @@ const ForgetPasword = () => {
 
   const handleForget = async (e) => {
     e.preventDefault();
-    const response = await axios.patch("/api/forget_password", data);
-    if (response.status === 200) {
-      notify();
-    } else {
-      setErr(response.message);
+    setLoading(true);
+    try {
+      const response = await axios.patch("/api/forget_password", data);
+      if (response.status === 200) {
+        notify();
+        setLoading(false);
+      } else {
+        setErr(response.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      setLoading(false);
+      setErr(err?.message);
+      console.log("Error", err);
     }
   };
   return (
@@ -67,7 +77,7 @@ const ForgetPasword = () => {
                       />
                     </div>
                     <div
-                      className={`text-red-500 text-center text-sm ${
+                      className={`text-red-500 text-center text-sm mt-2 ${
                         err.length > 0 ? "block" : "hidden"
                       }`}>
                       {err}
@@ -75,8 +85,9 @@ const ForgetPasword = () => {
                   </div>
                   <button
                     type="submit"
+                    disabled={loading ? true : false}
                     className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                    Reset password
+                    {loading ? "Sending reset link..." : "Reset password"}
                   </button>
                 </div>
               </form>

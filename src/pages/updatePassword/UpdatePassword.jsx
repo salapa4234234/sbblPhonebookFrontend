@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
 import storage from "../../utils/storage";
@@ -10,11 +10,11 @@ import toast from "react-hot-toast";
 const UpdatePassword = () => {
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
-  console.log("isValid", isValid);
   const [formValues, setFormValues] = useState({
     password: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = storage.getToken();
   const passwordRegex =
@@ -33,9 +33,10 @@ const UpdatePassword = () => {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (formValues.password !== formValues.confirmPassword) {
       setError("Password did not match");
+      setLoading(false);
       return;
     }
 
@@ -43,19 +44,26 @@ const UpdatePassword = () => {
       newPassword: formValues.password,
     };
 
-    const response = await axios.patch(`/api/update_password/${id}`, data);
-    if (response.status === 200) {
-      navigate("/");
-      storage.clearToken();
-      notify();
-    } else {
-      setError(response.message);
+    try {
+      const response = await axios.patch(`/api/update_password/${id}`, data);
+      if (response.status === 200) {
+        navigate("/");
+        storage.clearToken();
+        notify();
+        setLoading(false);
+      } else {
+        setError(response.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      setError(err?.message);
+      setLoading(false);
+      console.log("Error", err);
     }
   };
   const handleBack = () => {
     navigate("/contacts");
   };
-  console.log("hello", isValid);
   return (
     <div className="w-full h-screen ">
       <Header />
@@ -143,8 +151,9 @@ const UpdatePassword = () => {
                 <div className="mt-5">
                   <button
                     type="submit"
+                    disabled={loading ? true : false}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Update your password{" "}
+                    {loading ? "Updating Password..." : "Update your password"}
                   </button>
                 </div>
               </div>

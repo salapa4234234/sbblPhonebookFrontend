@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 const ForgetUpdatePassword = () => {
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { email } = useParams();
   const [formValues, setFormValues] = useState({
     password: "",
@@ -30,9 +31,10 @@ const ForgetUpdatePassword = () => {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (formValues.password !== formValues.confirmPassword) {
       setError("Password did not match with confirm password !");
+      setLoading(false);
       return;
     }
 
@@ -40,15 +42,23 @@ const ForgetUpdatePassword = () => {
       newPassword: formValues.password,
     };
 
-    const response = await axios.patch(
-      `/api/forget_password/${getEmail(email)}`,
-      data
-    );
-    if (response.status === 200) {
-      navigate("/");
-      notify();
-    } else {
-      setError(response.message);
+    try {
+      const response = await axios.patch(
+        `/api/forget_password/${getEmail(email)}`,
+        data
+      );
+      if (response.status === 200) {
+        navigate("/");
+        notify();
+        setLoading(false);
+      } else {
+        setError(response.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      setLoading(false);
+      setError(err?.message);
+      console.log("Error", err);
     }
   };
   const handleBack = () => {
@@ -92,10 +102,11 @@ const ForgetUpdatePassword = () => {
                         autoComplete="password"
                         required
                         onChange={handleChange}
-                        onFocus={() => setError("")}
+                        onFocus={() => {
+                          setError("");
+                        }}
                         onBlur={() => {
                           setError("");
-                          setIsValid(false);
                         }}
                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:bg-blue-gradient sm:text-sm sm:leading-6"
                       />
@@ -144,7 +155,7 @@ const ForgetUpdatePassword = () => {
                   <button
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Forget your password{" "}
+                    {loading ? "Updating password...." : "Forget your password"}
                   </button>
                 </div>
               </div>

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const LoginPage = () => {
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const notify = () => toast.success("Successfully login !");
 
@@ -18,17 +19,26 @@ const LoginPage = () => {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       email: formValues.email,
       password: formValues.password,
     };
-    const response = await axios.post(`/api/login`, data);
-    if (response.status === 200) {
-      storage.setToken(response);
-      navigate("/contacts");
-      notify();
-    } else {
-      setError(response.message);
+    try {
+      const response = await axios.post(`/api/login`, data);
+      if (response.status === 200) {
+        storage.setToken(response);
+        navigate("/contacts");
+        notify();
+        setLoading(false);
+      } else {
+        setError(response.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log("Error", err);
+      setError(err?.message);
+      setLoading(false);
     }
   };
   return (
@@ -102,8 +112,9 @@ const LoginPage = () => {
                   <div>
                     <button
                       type="submit"
+                      disabled={loading ? true : false}
                       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      Sign in
+                      {loading ? "Logging In..." : "Login"}
                     </button>
                   </div>
                 </div>

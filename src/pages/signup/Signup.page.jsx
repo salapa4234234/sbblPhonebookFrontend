@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/container/Container";
 import { axios } from "../../lib/axios";
@@ -8,6 +8,7 @@ const SignupPage = () => {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -39,9 +40,10 @@ const SignupPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (formValues.password !== formValues.confirmPassword) {
-      setErr({ msg: "Password did not match with confirm password !" });
+      setErr("Password did not match with confirm password !");
+      setLoading(false);
       return;
     }
     const data = {
@@ -55,13 +57,20 @@ const SignupPage = () => {
       gender: formValues.gender,
       password: formValues.password,
     };
-    const response = await axios.post(`/api/register`, data);
-    console.log(err);
-    if (response.status === 200) {
-      navigate("/");
-      notify();
-    } else {
-      setErr(response);
+    try {
+      const response = await axios.post(`/api/register`, data);
+      if (response.status === 200) {
+        navigate("/");
+        notify();
+        setLoading(false);
+      } else {
+        setErr(response?.msg);
+        setLoading(false);
+      }
+    } catch (err) {
+      setLoading(false);
+      setErr(err?.message);
+      console.log("err", err);
     }
   };
   return (
@@ -200,6 +209,9 @@ const SignupPage = () => {
                       <option>Coporate</option>
                       <option>CSD</option>
                       <option>MF</option>
+                      <option>BM</option>
+                      <option>Loan</option>
+                      <option>Other</option>
                     </select>
                   </div>
                 </div>
@@ -298,15 +310,16 @@ const SignupPage = () => {
                   </div>
                   <div
                     className={`text-red-500 text-center text-sm ${
-                      err.msg && err?.msg.length > 0 ? "block" : "hidden"
+                      err && err?.length > 0 ? "block" : "hidden"
                     }`}>
-                    {err.msg && err?.msg}
+                    {err && err}
                   </div>
                   <div>
                     <button
                       type="submit"
+                      disabled={loading ? true : false}
                       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                      Sign Up
+                      {loading ? "Registering..." : "Register"}
                     </button>
                   </div>
                 </div>
